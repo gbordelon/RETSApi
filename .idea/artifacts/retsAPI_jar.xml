@@ -1,0 +1,25 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="retsAPI:jar">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="root">
+      <element id="archive" name="retsAPI.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="retsAPI" />
+      </element>
+      <element id="directory" name="lib">
+        <element id="library" level="module" name="activation.jar" module-name="retsAPI" />
+        <element id="library" level="module" name="BZip2.jar" module-name="retsAPI" />
+        <element id="library" level="module" name="commons-httpclient-3.1.jar" module-name="retsAPI" />
+        <element id="library" level="module" name="commons-logging-api.jar" module-name="retsAPI" />
+        <element id="library" level="module" name="commons-logging.jar" module-name="retsAPI" />
+        <element id="library" level="project" name="lib" />
+        <element id="library" level="module" name="retsCommons.jar" module-name="retsAPI" />
+        <element id="library" level="module" name="mail.jar" module-name="retsAPI" />
+        <element id="library" level="module" name="commons-rets.jar" module-name="retsAPI" />
+        <element id="library" level="module" name="log4j-1.2.5.jar" module-name="retsAPI" />
+      </element>
+    </root>
+  </artifact>
+</component>

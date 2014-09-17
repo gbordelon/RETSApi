@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Class-Path: commons-rets.jar mail.jar activation.jar commons-httpclien
+ t-3.1.jar BZip2.jar activation.jar BZip2.jar commons-httpclient-3.1.j
+ ar commons-logging-api.jar commons-logging.jar commons-rets.jar log4j
+ -1.2.5.jar mail.jar retsCommons.jar activation.jar BZip2.jar commons-
+ httpclient-3.1.jar commons-logging-api.jar commons-logging.jar common
+ s-rets.jar log4j-1.2.5.jar mail.jar retsCommons.jar log4j-1.2.5.jar c
+ ommons-logging.jar commons-logging-api.jar
+

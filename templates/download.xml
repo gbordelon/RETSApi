@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <title>Download Page for $pom.name </title>
+  </properties>
+  <body>
+    <section name="Download">
+      <p>
+      The currently released files for $pom.name can be downloaded from
+      this page. 
+      </p>
+    </section>
+
+    <section name="Versions">
+      <p>
+        <table>
+          <tr>
+            <th>Version</th>
+            <th>Binaries</th>
+            <th>Source</th>
+          </tr>
+
+         #set ($repositoryDirectory = "/sandbox/repository/retsapi")
+          #foreach ($version in $pom.versions)
+          <tr>
+            <td>
+              $!version
+            </td>
+            <td>
+              <a href="$repositoryDirectory/$!pom.artifactId/distributions/$!{pom.artifactId}-${version}.tar.gz">Binary tar.gz</a><br/>
+              <a href="$repositoryDirectory/$!pom.artifactId/distributions/$!{pom.artifactId}-${version}.zip">Binary zip</a><br/>
+
+            </td>
+            <td>
+              <a href="$repositoryDirectory/$!pom.artifactId/distributions/$!{pom.artifactId}-${version}-src.tar.gz">Source tar.gz</a><br/>
+              <a href="$repositoryDirectory/$!pom.artifactId/distributions/$!{pom.artifactId}-${version}-src.zip">Source zip</a><br/>
+            </td>
+          </tr>
+          #end
+
+        </table>
+
+      </p>
+    </section>
+  </body>
+</document>
