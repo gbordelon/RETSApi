@@ -2,10 +2,10 @@ package org.realtor.rets.retsapi;
 
 import javax.activation.DataSource;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Vector;
 
 /**
  * A class to provide a {@link javax.activation.DataSource} interface to
@@ -21,52 +21,20 @@ public class InputStreamDataSource implements DataSource
 {
     private byte fStreamBytes[];
     private String fContentType;
+    private static final int quantum = 4096;
 
     public InputStreamDataSource(InputStream baseStream, String contentType) throws IOException {
         fContentType = contentType;
 
-        // Read the content of the input stream into byte array blocks. Read
-        // to the end of file and save all the blocks. These will be consolidated
-        // after all are read. This uses twice as much storage as simply designing
-        // a new input stream, but I don't want to write that class right now,
-        // especially since I'm not completely clear on the blocking semantics.
-        // ByteArrayInputStream already knows them, so I'll just use that.
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte temporaryByteArray[] = new byte[quantum];
+        int readCount = 0;
 
-        Vector<byte[]> byteArrays = new Vector<byte[]>();
-        int totalBytesRead = 0;
-        byte temporaryByteArray[];
-        int readCount;
-        int quantum = 4096;
-        int bytesInCurrentBlock;
-
-        do {
-            bytesInCurrentBlock = 0;
-            temporaryByteArray = new byte[quantum];
-            do {
-                readCount =
-                        baseStream.read(temporaryByteArray, bytesInCurrentBlock, quantum - bytesInCurrentBlock);
-                if (readCount > 0) bytesInCurrentBlock += readCount;
-            } while (readCount >= 0 && bytesInCurrentBlock < quantum);
-
-            if (bytesInCurrentBlock > 0)
-                byteArrays.add(temporaryByteArray);
-
-            totalBytesRead += bytesInCurrentBlock;
-        } while (readCount >= 0);
-
-        // Copy all the blocks into one single mondo block.
-        fStreamBytes = new byte[totalBytesRead];
-
-        int numberOfBlocks = byteArrays.size();
-        byte theBlock[];
-        for (int blockIndex = 0; blockIndex < numberOfBlocks - 1; ++blockIndex) {
-            theBlock = (byte[]) byteArrays.get(blockIndex);
-            System.arraycopy(theBlock, 0, fStreamBytes, blockIndex * quantum, quantum);
+        while (readCount != -1) {
+            out.write(temporaryByteArray, 0, readCount);
+            readCount = baseStream.read(temporaryByteArray);
         }
-
-        theBlock = (byte[]) byteArrays.get(numberOfBlocks - 1);
-        System.arraycopy(theBlock, 0, fStreamBytes, quantum * (numberOfBlocks - 1), bytesInCurrentBlock);
-        
+        fStreamBytes = out.toByteArray();
     }
 
     /**
